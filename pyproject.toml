@@ -15,9 +15,11 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+mcp = ["mcp>=1.2,<2"]
 
 [project.scripts]
 poc-revenue = "poc_revenue.cli:main"
+poc-revenue-mcp = "poc_revenue.mcp_server:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }

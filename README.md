@@ -33,3 +33,15 @@ UiPath can hand off the same `contracts.json` shape to this CLI, so a document/w
 ## Compliance spine
 
 Vendored `control-spine`. Over-time vs point-in-time is an input in the foundation. The engine measures; it does not identify performance obligations. Unsigned packs are `EXPLORING`. A named owner on a non-empty population reaches `LOCKED`.
+
+## MCP server
+
+`src/poc_revenue/mcp_server.py` publishes the engine over Model Context Protocol: a thin wrapper in the `io.github.icohangar-ops/poc-revenue` namespace (stdio transport) whose tools — `measure_contract` and `revenue_evidence_pack` — call `poc_revenue.engine` and `poc_revenue.evidence` verbatim. All measurement logic lives in the engine module; the wrapper adds no logic, touches no network, and makes no performance-obligation judgment calls a human owns. Evidence packs built through MCP are always unsigned — the tool takes no owner, so the spine renders `EXPLORING` and `is_evidence: false`; a named human signs via the CLI (`--owner`), never through MCP.
+
+MCP access is opt-in, keeping the deterministic core zero-dependency: the engine and CLI install with no runtime dependencies, and the MCP server ships behind the `mcp` extra (`pip install 'poc-revenue[mcp]'`) — chosen over a hard dependency after prelint review, since a default install must stay dependency-free. CI installs `.[dev,mcp]` so the MCP tests still run.
+
+```bash
+uvx --from 'poc-revenue[mcp]' poc-revenue-mcp
+# or from a checkout:
+uv run --with 'mcp>=1.2,<2' --with . python -m poc_revenue.mcp_server
+```
