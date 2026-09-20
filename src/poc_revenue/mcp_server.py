@@ -105,8 +105,7 @@ def revenue_evidence_pack(
         (--owner), never through MCP.
     """
     rows = tuple(measure(_contract_from_dict(item)) for item in contracts)
-    pack = evidence_pack(rows, period_label, owner="")
-    pack["invoked_via"] = "mcp"
+    pack = evidence_pack(rows, period_label, owner="", invoked_via="mcp")
     return _jsonify(pack)
 
 

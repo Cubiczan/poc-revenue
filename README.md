@@ -43,5 +43,5 @@ MCP access is opt-in, keeping the deterministic core zero-dependency: the engine
 ```bash
 uvx --from 'poc-revenue[mcp]' poc-revenue-mcp
 # or from a checkout:
-uv run --with 'mcp<2' --with . python -m poc_revenue.mcp_server
+uv run --with 'mcp>=1.2,<2' --with . python -m poc_revenue.mcp_server
 ```

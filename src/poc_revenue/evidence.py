@@ -16,7 +16,7 @@ ENGINE_ID = "poc-revenue-engine"
 ENGINE_VERSION = "0.1.0"
 
 
-def evidence_pack(rows: tuple[Measurement, ...], period_label: str, owner: str) -> dict:
+def evidence_pack(rows: tuple[Measurement, ...], period_label: str, owner: str, invoked_via: str | None = None) -> dict:
     revenue = money(sum((r.revenue_to_date for r in rows), Decimal("0")))
     pack = {
         "control_id": "ICFR-ASC606-01",
@@ -44,6 +44,8 @@ def evidence_pack(rows: tuple[Measurement, ...], period_label: str, owner: str) 
         "owner_signoff": owner,
         "conclusion": f"Revenue to date {revenue}. Owner confirms estimated costs and the constraint of variable consideration.",
     }
+    if invoked_via is not None:
+        pack["invoked_via"] = invoked_via
     return seal(
         pack,
         engine_id=ENGINE_ID,
