@@ -12,9 +12,9 @@ via the ``mcp-publisher`` CLI.
 
 Run it:
 
-    uvx --from poc-revenue poc-revenue-mcp
+    uvx --from 'poc-revenue[mcp]' poc-revenue-mcp
     # or, from a checkout:
-    python -m poc_revenue.mcp_server
+    uv run --with 'mcp>=1.2,<2' --with . python -m poc_revenue.mcp_server
 """
 
 from __future__ import annotations
