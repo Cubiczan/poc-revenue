@@ -91,7 +91,6 @@ def measure_contract(contract: dict[str, Any]) -> dict[str, Any]:
 def revenue_evidence_pack(
     contracts: list[dict[str, Any]],
     period_label: str = "current",
-    owner: str = "",
 ) -> dict[str, Any]:
     """Build the ASC 606 evidence pack a tester can reperform without the source code.
 
@@ -101,10 +100,14 @@ def revenue_evidence_pack(
     Args:
         contracts: Contract terms, same shape as measure_contract's input.
         period_label: Close period label (e.g. "H1 2026").
-        owner: Named owner for sign-off. Must not be the engine.
+        Sign-off: MCP never accepts an owner — packs built here are always
+        unsigned (EXPLORING, not evidence). A named human signs via the CLI
+        (--owner), never through MCP.
     """
     rows = tuple(measure(_contract_from_dict(item)) for item in contracts)
-    return _jsonify(evidence_pack(rows, period_label, owner))
+    pack = evidence_pack(rows, period_label, owner="")
+    pack["invoked_via"] = "mcp"
+    return _jsonify(pack)
 
 
 def main() -> None:

@@ -48,7 +48,10 @@ def test_measure_contract_pins_the_readme_numbers() -> None:
 
 def test_evidence_pack_totals_population() -> None:
     pack = mcp_server.revenue_evidence_pack(
-        [_contract()], period_label="H1 2026", owner="Controller"
+        [_contract()], period_label="H1 2026"
     )
     assert pack["population_count"] == 1
+    assert pack["lock_state"] == "EXPLORING"
+    assert pack["is_evidence"] is False
+    assert pack["invoked_via"] == "mcp"
     assert pack["revenue_to_date"] == "250000.00"

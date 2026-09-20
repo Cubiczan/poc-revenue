@@ -36,7 +36,7 @@ Vendored `control-spine`. Over-time vs point-in-time is an input in the foundati
 
 ## MCP server
 
-`src/poc_revenue/mcp_server.py` publishes the engine over Model Context Protocol: a thin wrapper in the `io.github.Cubiczan` namespace (stdio transport) whose tools — `measure_contract` and `revenue_evidence_pack` — call `poc_revenue.engine` and `poc_revenue.evidence` verbatim. All measurement logic lives in the engine module; the wrapper adds no logic, touches no network, and makes no performance-obligation judgment calls a human owns.
+`src/poc_revenue/mcp_server.py` publishes the engine over Model Context Protocol: a thin wrapper in the `io.github.Cubiczan` namespace (stdio transport) whose tools — `measure_contract` and `revenue_evidence_pack` — call `poc_revenue.engine` and `poc_revenue.evidence` verbatim. All measurement logic lives in the engine module; the wrapper adds no logic, touches no network, and makes no performance-obligation judgment calls a human owns. Evidence packs built through MCP are always unsigned — the tool takes no owner, so the spine renders `EXPLORING` and `is_evidence: false`; a named human signs via the CLI (`--owner`), never through MCP.
 
 ```bash
 uvx --from poc-revenue poc-revenue-mcp
