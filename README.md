@@ -33,3 +33,13 @@ UiPath can hand off the same `contracts.json` shape to this CLI, so a document/w
 ## Compliance spine
 
 Vendored `control-spine`. Over-time vs point-in-time is an input in the foundation. The engine measures; it does not identify performance obligations. Unsigned packs are `EXPLORING`. A named owner on a non-empty population reaches `LOCKED`.
+
+## MCP server
+
+`src/poc_revenue/mcp_server.py` publishes the engine over Model Context Protocol: a thin wrapper in the `io.github.Cubiczan` namespace (stdio transport) whose tools — `measure_contract` and `revenue_evidence_pack` — call `poc_revenue.engine` and `poc_revenue.evidence` verbatim. All measurement logic lives in the engine module; the wrapper adds no logic, touches no network, and makes no performance-obligation judgment calls a human owns.
+
+```bash
+uvx --from poc-revenue poc-revenue-mcp
+# or from a checkout:
+python -m poc_revenue.mcp_server
+```

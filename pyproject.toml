@@ -11,13 +11,14 @@ requires-python = ">=3.10"
 authors = [{ name = "Cubiczan", email = "sam@cubiczan.com" }]
 license = { text = "MIT" }
 keywords = ["asc-606", "percentage-of-completion", "revenue", "icfr"]
-dependencies = []
+dependencies = ["mcp>=1.2,<2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
 [project.scripts]
 poc-revenue = "poc_revenue.cli:main"
+poc-revenue-mcp = "poc_revenue.mcp_server:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
