@@ -38,10 +38,10 @@ Vendored `control-spine`. Over-time vs point-in-time is an input in the foundati
 
 `src/poc_revenue/mcp_server.py` publishes the engine over Model Context Protocol: a thin wrapper in the `io.github.Cubiczan` namespace (stdio transport) whose tools — `measure_contract` and `revenue_evidence_pack` — call `poc_revenue.engine` and `poc_revenue.evidence` verbatim. All measurement logic lives in the engine module; the wrapper adds no logic, touches no network, and makes no performance-obligation judgment calls a human owns. Evidence packs built through MCP are always unsigned — the tool takes no owner, so the spine renders `EXPLORING` and `is_evidence: false`; a named human signs via the CLI (`--owner`), never through MCP.
 
-The pre-row-16 package was deliberately zero-dependency; making `mcp` hard is a documented override, not an oversight: an optional `[mcp]` extra would ship a server that cannot start from a default install, breaking the six-engine publishing convention. Library and CLI-only installs (UiPath integrations, control-spine tooling importing only the engine) still carry the MCP SDK — accepted for this package because the primary consumer is the Cubiczan agent ecosystem.
+MCP access is opt-in, keeping the deterministic core zero-dependency: the engine and CLI install with no runtime dependencies, and the MCP server ships behind the `mcp` extra (`pip install 'poc-revenue[mcp]'`) — chosen over a hard dependency after prelint review, since a default install must stay dependency-free. CI installs `.[dev,mcp]` so the MCP tests still run.
 
 ```bash
-uvx --from poc-revenue poc-revenue-mcp
+uvx --from 'poc-revenue[mcp]' poc-revenue-mcp
 # or from a checkout:
-python -m poc_revenue.mcp_server
+uv run --with 'mcp<2' --with . python -m poc_revenue.mcp_server
 ```
